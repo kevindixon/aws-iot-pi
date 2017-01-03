@@ -16,7 +16,7 @@ device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 
 # A function that reads the sensors data
-def read_temp_raw():
+def _read_temp_raw():
     f = open(device_file, 'r') # Opens the temperature device file
     lines = f.readlines() # Returns the text
     f.close()
@@ -24,13 +24,13 @@ def read_temp_raw():
 
 # Convert the value of the sensor into a temperature
 def read_temp():
-    lines = read_temp_raw() # Read the temperature 'device file'
+    lines = _read_temp_raw() # Read the temperature 'device file'
 
     # While the first line does not contain 'YES', wait for 0.2s
     # and then read the device file again.
     while lines[0].strip()[-3:] != 'YES':
         time.sleep(0.2)
-        lines = read_temp_raw()
+        lines = _read_temp_raw()
 
     # Look for the position of the '=' in the second line of the
     # device file.

@@ -139,8 +139,8 @@ time.sleep(2)
 # Publish to the same topic in a loop forever
 loopCount = 0
 while True:
-  # myAWSIoTMQTTClient.publish("sdk/test/Python", "New Message " + str(loopCount), 1)
-  # loopCount += 1
   current_temp = temperature.read_temp()
-  myAWSIoTMQTTClient.publish("home/temperature/playroom", current_temp[0], 1)
+  # current_temp = 26.88
+  payload = '{ "temperature": {"value": %f, "units": "celsius"}, "timestamp": %d } ' % (current_temp, time.time())
+  myAWSIoTMQTTClient.publish("home/temperature/playroom", payload, 1)
   time.sleep(30)
